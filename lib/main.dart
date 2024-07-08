@@ -1,7 +1,8 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+// Android Studio에서 sdk 를 설치하고, 거기서 에뮬을 만들고 와서 여기서 사용
+// 버전은 한국에서 대부분 안드로이드 10 이상을 사용중이므로 10으로 잡음
 void main() {
   runApp(MyApp());
 }
@@ -37,7 +38,7 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          Text('A random idea:'),
+          Text('A random AWESOME Best Best idea:'),
           Text(appState.current.asLowerCase),
         ],
       ),
