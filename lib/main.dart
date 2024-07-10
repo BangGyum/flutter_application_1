@@ -35,13 +35,22 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
 
-    return Scaffold(
+    return Scaffold( //앱 디자인을 머리 가슴 배로 나뉜 위젯 , appBar, body, bottomNavigationBar
+    //여기서 ctrl space 같이 누르면 무엇을 사용할 수 있는지 확인 가능
+    appBar: AppBar( title: Text("연습중")),
       body: Column(
         children: [
           Text('A random AWESOME Best Best idea:'),
           Text(appState.current.asLowerCase),
+           ElevatedButton(
+            onPressed: () {
+              print('button pressed!');
+            },
+            child: Text('Next'),
+          ),
         ],
       ),
+    bottomNavigationBar: BottomAppBar( child: Text('배') ),
     );
   }
 }
