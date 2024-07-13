@@ -29,20 +29,37 @@ class MyApp extends StatelessWidget { //MyApp은 StatelessWidget을 확장.
 
 class MyAppState extends ChangeNotifier { //MyAppState 클래스는 앱의 상태를 정의
             //Flutter에는 앱 상태를 관리하는 여러 강력한 방법이 존재
-            // 설명하기 쉬운 것 중 하나는 ChangeNotifier
+            // 설명하기 쉬운 것 중 하나가 현재 위에서 extends한 ChangeNotifier
+            //                      -SomeWidget
+            //   MyApp - MyHomPage    
+            //                      -OtherWidget
   var current = WordPair.random(); //앱이 작동하는 데 필요한 데이터를 정의
+
+  void getNext() {
+    current = WordPair.random(); //임의의 새 WordPair를 current에 재할당. 랜덤 단어 2개짝을 뱉음
+    notifyListeners();
+  }
+
 }
 
 class MyHomePage extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
-    var appState = context.watch<MyAppState>();
+  Widget build(BuildContext context) { //모든 위젯은 위젯이 하상 최신 상태로 유지되도록 
+                            //위젯의 상황이 변경될 때마다 자동으로 호출되는 build() 메서드를 정의
+    var appState = context.watch<MyAppState>(); //MyHomePage는 watch 메소드를 사용하여 앱의 현재 상태에 관한 변경사항을 추적
 
-    return Scaffold( //앱 디자인을 머리 가슴 배로 나뉜 위젯 , appBar, body, bottomNavigationBar
+    return Scaffold(  //모든 build 메소드는 위젯 or 중첩된 위젯 트리를 반환해야 합니다. Scaffold는 여기서 최상위 위젯.
+      //앱 디자인을 머리 가슴 배로 나뉜 위젯 , appBar, body, bottomNavigationBar
     //여기서 ctrl space 같이 누르면 무엇을 사용할 수 있는지 확인 가능
     appBar: AppBar( title: Text("연습중")),
       body: Column(
         children: [
+          ElevatedButton(
+            onPressed: () {
+              appState.getNext();  // ← This instead of print().
+            },
+            child: Text('randomTwoWord'),
+          ),
           Text('A random AWESOME Best Best idea:'),
           Text(appState.current.asLowerCase),
            ElevatedButton(
@@ -54,6 +71,7 @@ class MyHomePage extends StatelessWidget {
         ],
       ),
     bottomNavigationBar: BottomAppBar( child: Text('배') ),
+    
     );
   }
 }
