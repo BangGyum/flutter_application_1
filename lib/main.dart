@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget { //MyApp은 StatelessWidget을 확장.
         title: 'Namer App',
         theme: ThemeData(
           useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange),
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
         ),
         home: MyHomePage(),
       ),
@@ -47,7 +47,7 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) { //모든 위젯은 위젯이 하상 최신 상태로 유지되도록 
                             //위젯의 상황이 변경될 때마다 자동으로 호출되는 build() 메서드를 정의
     var appState = context.watch<MyAppState>(); //MyHomePage는 watch 메소드를 사용하여 앱의 현재 상태에 관한 변경사항을 추적
-
+    var pair = appState.current;  
     return Scaffold(  //모든 build 메소드는 위젯 or 중첩된 위젯 트리를 반환해야 합니다. Scaffold는 여기서 최상위 위젯.
       //앱 디자인을 머리 가슴 배로 나뉜 위젯 , appBar, body, bottomNavigationBar
     //여기서 ctrl space 같이 누르면 무엇을 사용할 수 있는지 확인 가능
@@ -61,7 +61,8 @@ class MyHomePage extends StatelessWidget {
             child: Text('randomTwoWord'),
           ),
           Text('A random AWESOME Best Best idea:'),
-          Text(appState.current.asLowerCase),
+          BigCard(pair: pair), // Text(pair.asLowerCase) 인데 text 에  ctrl + .  해서 
+          //Text(pair.asLowerCase),
            ElevatedButton(
             onPressed: () {
               print('button pressed!');
@@ -72,6 +73,27 @@ class MyHomePage extends StatelessWidget {
       ),
     bottomNavigationBar: BottomAppBar( child: Text('배') ),
     
+    );
+  }
+}
+
+class BigCard extends StatelessWidget {
+  const BigCard({
+    super.key,
+    required this.pair,
+  });
+
+  final WordPair pair;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);  //현재 위젯의 BuildContext를 나타냄. 이 BuildContext를 사용하여 Theme.of(context)를 호출.
+    return Card( //return Padding에서 Refactor메뉴를 불러와 Wrap with widget 선택, 이러면 상위 위젯 지정 가능
+      color: theme.colorScheme.primary, //primary가 앱을 정의하는 가장 두드러진 색상
+      child: Padding(
+        padding: const EdgeInsets.all(20.0), //Flutter는 가능한 경우 상속 대신 컴포지션을 사용. 여기서 패딩은 Text의 속성이 아니라 위젯.
+        child: Text(pair.asLowerCase),
+      ),
     );
   }
 }
