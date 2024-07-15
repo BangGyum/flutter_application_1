@@ -1,6 +1,7 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+//https://codelabs.developers.google.com/codelabs/flutter-codelab-first?hl=ko#4
 // Android Studio에서 sdk 를 설치하고, 거기서 에뮬을 만들고 와서 여기서 사용
 // 버전은 한국에서 대부분 안드로이드 10 이상을 사용중이므로 10으로 잡음
 void main() { //이 형식은 MyApp에서 정의된 앱을 실행하라고 flutter에 지시할 뿐
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget { //MyApp은 StatelessWidget을 확장.
         title: 'Namer App',
         theme: ThemeData(
           useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.green), //전체적인 앱 색이 이걸로 적용되게 됩니다. 
         ),
         home: MyHomePage(),
       ),
@@ -88,11 +89,17 @@ class BigCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);  //현재 위젯의 BuildContext를 나타냄. 이 BuildContext를 사용하여 Theme.of(context)를 호출.
+    final style = theme.textTheme.displayMedium!.copyWith( //heme.textTheme,을 사용하여 앱의 글꼴 테마에 액세스, bodyMedium(중간 크기의 표준 텍스트용) 또는 caption(이미지 설명용), headlineLarge(큰 헤드라인용) 등의 멤버가 포함
+                  //displayMedium 속성은 디스플레이 텍스트를 위한 큰 스타일
+                  //테마의 displayMedium 속성은 이론적으로 null일 수 있음. 근데 dart는 null 이 될 수 있는 객체의 메소드 호출x
+                  //따라서 ! 연산자('bang연산자')를 사용하여 개발자가 dart에게 인지하고 있음을 알려줌.
+      color: theme.colorScheme.onPrimary
+    );
     return Card( //return Padding에서 Refactor메뉴를 불러와 Wrap with widget 선택, 이러면 상위 위젯 지정 가능
       color: theme.colorScheme.primary, //primary가 앱을 정의하는 가장 두드러진 색상
       child: Padding(
         padding: const EdgeInsets.all(20.0), //Flutter는 가능한 경우 상속 대신 컴포지션을 사용. 여기서 패딩은 Text의 속성이 아니라 위젯.
-        child: Text(pair.asLowerCase),
+        child: Text(pair.asLowerCase, style: style,),
       ),
     );
   }
