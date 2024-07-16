@@ -53,24 +53,22 @@ class MyHomePage extends StatelessWidget {
       //앱 디자인을 머리 가슴 배로 나뉜 위젯 , appBar, body, bottomNavigationBar
     //여기서 ctrl space 같이 누르면 무엇을 사용할 수 있는지 확인 가능
     appBar: AppBar( title: Text("연습중")),
-      body: Column(
-        children: [
-          ElevatedButton(
-            onPressed: () {
-              appState.getNext();  // ← This instead of print().
-            },
-            child: Text('randomTwoWord'),
-          ),
-          Text('A random AWESOME Best Best idea:'),
-          BigCard(pair: pair), // Text(pair.asLowerCase) 인데 text 에  ctrl + .  해서 
-          //Text(pair.asLowerCase),
-           ElevatedButton(
-            onPressed: () {
-              print('button pressed!');
-            },
-            child: Text('Next'),
-          ),
-        ],
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center, //y축 중앙에 위치
+          children: [
+            SizedBox(height: 10),
+            BigCard(pair : pair), // Text(pair.asLowerCase) 인데 text 에  ctrl + .  해서 
+            //Text(pair.asPascalCase),
+            //Text(pair.asLowerCase),
+             ElevatedButton(
+              onPressed: () {
+                appState.getNext();  // ← This instead of print().
+              },
+              child: Text('Next'),
+            ),
+          ],
+        ),
       ),
     bottomNavigationBar: BottomAppBar( child: Text('배') ),
     
@@ -94,12 +92,18 @@ class BigCard extends StatelessWidget {
                   //테마의 displayMedium 속성은 이론적으로 null일 수 있음. 근데 dart는 null 이 될 수 있는 객체의 메소드 호출x
                   //따라서 ! 연산자('bang연산자')를 사용하여 개발자가 dart에게 인지하고 있음을 알려줌.
       color: theme.colorScheme.onPrimary
+
     );
     return Card( //return Padding에서 Refactor메뉴를 불러와 Wrap with widget 선택, 이러면 상위 위젯 지정 가능
       color: theme.colorScheme.primary, //primary가 앱을 정의하는 가장 두드러진 색상
       child: Padding(
         padding: const EdgeInsets.all(20.0), //Flutter는 가능한 경우 상속 대신 컴포지션을 사용. 여기서 패딩은 Text의 속성이 아니라 위젯.
-        child: Text(pair.asLowerCase, style: style,),
+        //child: Text(pair.asLowerCase, style: style,),
+        child: Text(
+          pair.asPascalCase,
+          style: style,
+          semanticsLabel: "${pair.first} ${pair.second}",
+        ),
       ),
     );
   }
