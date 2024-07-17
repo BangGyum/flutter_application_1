@@ -41,6 +41,18 @@ class MyAppState extends ChangeNotifier { //MyAppState 클래스는 앱의 상�
     notifyListeners();
   }
 
+  var favorites = <WordPair>[]; //like 버튼을 누르면 좋아요. 제네릭을 사용하여 단어 쌍만 포함될 수 있도록 지정. 
+
+  void toggleFavorite() { //like 목록에서 현재 단어 쌍을 삭제하거나(이미있으니깐), 추가하는 경우(없어니깐 else)
+    if (favorites.contains(current)) {
+      favorites.remove(current);
+    } else {
+      favorites.add(current);
+    }
+    notifyListeners();
+
+  }
+
 }
 
 class MyHomePage extends StatelessWidget {
