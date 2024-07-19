@@ -73,12 +73,17 @@ class MyHomePage extends StatelessWidget {
             BigCard(pair : pair), // Text(pair.asLowerCase) 인데 text 에  ctrl + .  해서 
             //Text(pair.asPascalCase),
             //Text(pair.asLowerCase),
-             ElevatedButton(
-              onPressed: () {
-                appState.getNext();  // ← This instead of print().
-              },
-              child: Text('Next'),
-            ),
+             Row( // 버튼 2개를 가로로 배치하기 위해
+              mainAxisSize: MainAxisSize.min, //Column 또는 row 위젯의 자식 위젯들이 필요로 하는 최소한의 공간만 차지
+               children: [
+                 ElevatedButton(
+                  onPressed: () {
+                    appState.getNext();  // ← This instead of print().
+                  },
+                  child: Text('Next'),
+                             ),
+               ],
+             ),
           ],
         ),
       ),
